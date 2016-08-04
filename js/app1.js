@@ -30,7 +30,7 @@ const App = React.createClass({
                     <Preview elements = {this.state.elements}/>
                 </div>
                 <div className={isEditor ? "":"hidden"}>
-                    <Editor elememts = {this.state.elements} onAdd = {this.Add} onDelete = {this.Delete}/>
+                    <Editor elements = {this.state.elements} onAdd = {this.Add} onDelete = {this.Delete}/>
                 </div>
             </div>
         )
@@ -38,8 +38,16 @@ const App = React.createClass({
 });
 const Preview = React.createClass({
     render: function () {
+        const elements = this.props.elements.map((ele,index)=>{
+            return <div key = {index}>
+                <input type={ele} />
+            </div>
+        });
         return (
-            <div>Preview</div>
+            <div>
+                {elements}
+                <button>Submit</button>
+            </div>
         )
     }
 });
@@ -54,16 +62,34 @@ const Editor = React.createClass({
     }
 });
 const Left = React.createClass({
+    remove:function (index) {
+        this.props.onDelete(index);
+    },
     render: function () {
+        const elements = this.props.elements.map((ele,index)=>{
+            return <div key = {index}>
+                <input type={ele} />
+                <button onClick = {this.remove.bind(this,index)}>X</button>
+            </div>
+        });
         return (
-            <div>Left</div>
+            <div>
+                {elements}
+            </div>
         )
     }
 });
 const Right = React.createClass({
+    add:function () {
+      this.props.onAdd($("input[name=select]:checked").val());
+    },
     render: function () {
         return (
-            <div>Right</div>
+            <div>
+                <input type="radio" name="select" value="text"/>TEXT
+                <input type="radio" name="select" value="date" />DATE
+                <button onClick = {this.add}>+</button>
+            </div>
         )
     }
 });
