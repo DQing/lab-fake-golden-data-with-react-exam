@@ -1,0 +1,42 @@
+.title {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.b1 {
+    border: gainsboro 2px solid;
+    height: 700px;
+}
+.b2{
+    border: gainsboro 2px solid;
+    height: 700px;
+}
+.b3{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 500px;
+}
+.b4{
+   margin-top: 15px;
+}
+.b5{
+    margin-top: 50px;
+    margin-left: 50px;
+    font-size: x-large;
+}
+.b6{
+    border: gainsboro 2px solid;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.b7{
+    text-align: center;
+}
+.b8{
+    margin-left: 100px;
+}
+.b6 button{
+    margin-top: 50px;
+    margin-left: 300px;
+}

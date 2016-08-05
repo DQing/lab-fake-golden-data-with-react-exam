@@ -22,12 +22,12 @@ const App = React.createClass({
     render: function () {
         const isEditor = this.state.isEditor;
         return (
-            <div>
-                <button onClick={this.toggle}>{isEditor ? "Preview" : "Editor"}</button>
-                <div className={isEditor ? "hidden" : ""}>
+            <div className="container box ">
+                <button className="btn-lg b3" onClick={this.toggle}>{isEditor ? "Preview" : "Editor"}</button>
+                <div className={isEditor ? "hidden" : ""} classID="preview">
                     <Preview elements={this.state.elements}/>
                 </div>
-                <div className={isEditor ? "" :"hidden"}>
+                <div className={isEditor ? "" :"hidden"} classID="editor">
                     <Editor elements={this.state.elements} onAdd={this.Add} onDelete={this.Delete}/>
                 </div>
             </div>
@@ -38,13 +38,13 @@ const Preview = React.createClass({
     render: function () {
         const elements = this.props.elements.map((ele, index)=> {
             return <div className={index}>
-                <input type={ele}/>
+                <input type={ele} className="b4 input-lg"/>
             </div>
         });
         return (
-            <div>
+            <div className="b6">
                 {elements}
-                <button>Submit</button>
+                <button className="btn-lg">Submit</button>
             </div>
         )
     }
@@ -52,9 +52,15 @@ const Preview = React.createClass({
 const Editor = React.createClass({
     render: function () {
         return (
-            <div>
-                <Left elements={this.props.elements} onDelete={this.props.onDelete}/>
-                <Right onAdd={this.props.onAdd}/>
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-6 b1">
+                        <Left elements={this.props.elements} onDelete={this.props.onDelete}/>
+                    </div>
+                    <div className="col-lg-6 b2">
+                        <Right onAdd={this.props.onAdd}/>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -67,8 +73,10 @@ const Left = React.createClass({
     render: function () {
         const elements = this.props.elements.map((ele, index)=> {
             return <div key={index}>
-                <input type={ele}/>
-                <button onClick={this.remove.bind(this,index)}>X</button>
+                <input className="input-lg b4" type={ele}/>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" className="btn btn-default" aria-label="Left Align" onClick={this.remove.bind(this,index)}>
+                    <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
             </div>
         });
         return (
@@ -85,10 +93,12 @@ const Right = React.createClass({
     },
     render: function () {
         return (
-            <div>
-                <input type="radio" name="select" value="text"/>TEXT
-                <input type="radio" name="select" value="date"/>DATE
-                <button onClick={this.add}>+</button>
+            <div className="b5">
+                <input type="radio" name="select" value="text" />&nbsp;&nbsp;TEXT&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="select" value="date" />&nbsp;&nbsp;DATE&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" className="btn btn-default" aria-label="Left Align" onClick = {this.add}>
+                        <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
             </div>
         )
     }
