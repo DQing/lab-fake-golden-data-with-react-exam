@@ -2,12 +2,8 @@ const App = React.createClass({
 
     getInitialState(){
         return {
-            isEditor: true,
             elements: []
         }
-    },
-    toggle: function () {
-        this.setState({isEditor: !this.state.isEditor});
     },
     Delete: function (index) {
         const elements = this.state.elements;
@@ -20,16 +16,13 @@ const App = React.createClass({
         this.setState({elements});
     },
     render: function () {
-        const isEditor = this.state.isEditor;
         return (
-            <div className="container box ">
-                <button className="btn-lg b3" onClick={this.toggle}>{isEditor ? "Preview" : "Editor"}</button>
-                <div className={isEditor ? "hidden" : ""} classID="preview">
-                    <Preview elements={this.state.elements}/>
-                </div>
-                <div className={isEditor ? "" :"hidden"} classID="editor">
-                    <Editor elements={this.state.elements} onAdd={this.Add} onDelete={this.Delete}/>
-                </div>
+            <div>
+                {this.props.children && React.cloneElement(this.props.children, {
+                    elements: this.state.elements,
+                    onAdd: this.Add,
+                    onDelete: this.Delete
+                })}
             </div>
         )
     }
@@ -43,6 +36,7 @@ const Preview = React.createClass({
         });
         return (
             <div className="b6">
+                <ReactRouter.Link to="/Editor">Editor</ReactRouter.Link>
                 {elements}
                 <button className="btn-lg">Submit</button>
             </div>
@@ -53,6 +47,7 @@ const Editor = React.createClass({
     render: function () {
         return (
             <div className="container">
+                <ReactRouter.Link to="/Preview">Preview</ReactRouter.Link>
                 <div className="row">
                     <div className="col-lg-6 b1">
                         <Left elements={this.props.elements} onDelete={this.props.onDelete}/>
@@ -103,4 +98,11 @@ const Right = React.createClass({
         )
     }
 });
-ReactDOM.render(<App />, document.getElementById('content'));
+ReactDOM.render(
+    <ReactRouter.Router>
+        <ReactRouter.Route path="/" component={App}>
+            <ReactRouter.IndexRoute component={Editor}/>
+            <ReactRouter.Route path="Preview" component={Preview}/>
+            <ReactRouter.Route path="Editor" component={Editor}/>
+        </ReactRouter.Route>
+    </ReactRouter.Router>, document.getElementById('content'));
